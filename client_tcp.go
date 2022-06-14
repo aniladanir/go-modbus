@@ -289,6 +289,14 @@ func (sf *TCPClientProvider) Connect() error {
 	return err
 }
 
+// Sets underlying connection to the provided net.Conn
+func (sf *TCPClientProvider) SetConnection(conn net.Conn) error {
+	sf.mu.Lock()
+	sf.conn = conn
+	sf.mu.Unlock()
+	return nil
+}
+
 // Caller must hold the mutex before calling this method.
 func (sf *TCPClientProvider) connect() error {
 	if sf.conn == nil {
